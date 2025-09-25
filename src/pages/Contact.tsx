@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Mail, MapPin, Clock, Send, Music, Calendar } from 'lucide-react';
 import { sendEmail } from '../lib/sendMail';
 
@@ -16,7 +17,7 @@ const Contact: React.FC = () => {
     {
       icon: Mail,
       title: 'Email',
-      details: 'hello@yobaexo.com',
+      details: 'info@yobaexo.com',
       description: 'For general inquiries and collaborations',
     },
     // {
@@ -71,7 +72,7 @@ const Contact: React.FC = () => {
       }
     } catch (error) {
       console.error('Form submission error:', error);
-      alert('There was an error sending your message. Please try again or email us directly at hello@yobaexo.com. Note: You may need to authenticate with a Microsoft account to send emails.');
+      alert('There was an error sending your message. Please try again or email us directly at info@yobaexo.com. Note: You may need to authenticate with a Microsoft account to send emails.');
     } finally {
       setIsLoading(false);
     }
@@ -133,13 +134,13 @@ const Contact: React.FC = () => {
                 Quick <span className="text-violet-400">Actions</span>
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <a
-                  href="/licensing"
+                <Link
+                  to="/licensing"
                   className="flex items-center gap-3 p-4 bg-gray-700 hover:bg-gray-600 rounded-xl transition-colors duration-200"
                 >
                   <Music className="h-5 w-5 text-pink-400" />
                   <span className="text-white font-medium">License Music</span>
-                </a>
+                </Link>
                 {/* <a
                   href="/epk"
                   className="flex items-center gap-3 p-4 bg-gray-700 hover:bg-gray-600 rounded-xl transition-colors duration-200"
@@ -147,20 +148,20 @@ const Contact: React.FC = () => {
                   <Headphones className="h-5 w-5 text-cyan-400" />
                   <span className="text-white font-medium">Press Kit</span>
                 </a> */}
-                <a
-                  href="/albums"
+                <Link
+                  to="/albums"
                   className="flex items-center gap-3 p-4 bg-gray-700 hover:bg-gray-600 rounded-xl transition-colors duration-200"
                 >
                   <Calendar className="h-5 w-5 text-violet-400" />
                   <span className="text-white font-medium">View Albums</span>
-                </a>
-                <a
-                  href="/donate"
+                </Link>
+                <Link
+                  to="/donate"
                   className="flex items-center gap-3 p-4 bg-gray-700 hover:bg-gray-600 rounded-xl transition-colors duration-200"
                 >
                   <MapPin className="h-5 w-5 text-pink-400" />
                   <span className="text-white font-medium">Support Artist</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -310,7 +311,7 @@ const Contact: React.FC = () => {
                 How do I license your music?
               </h3>
               <p className="text-gray-400">
-                Check out our <a href="/licensing" className="text-pink-400 hover:underline">licensing page</a> for 
+                Check out our <Link to="/licensing" className="text-pink-400 hover:underline">licensing page</Link> for
                 detailed information about our music licensing options and pricing.
               </p>
             </div>

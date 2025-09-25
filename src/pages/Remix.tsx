@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Play, ExternalLink, Instagram, Youtube, Music2 } from 'lucide-react';
 import { youtubeService, YouTubeVideo } from '../services/youtube';
+import VideoModal from '../components/VideoModal';
 const Remix: React.FC = () => {
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedVideo, setSelectedVideo] = useState<YouTubeVideo | null>(null);
 
   useEffect(() => {
     const fetchVideos = async () => {
@@ -98,7 +100,7 @@ const Remix: React.FC = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <button
-                        onClick={() => window.open(video.url, '_blank')}
+                        onClick={() => setSelectedVideo(video)}
                         className="bg-red-600 hover:bg-red-700 text-white p-4 rounded-full transition-colors duration-200 transform scale-75 group-hover:scale-100"
                       >
                         <Play className="h-6 w-6 ml-1" />
@@ -200,6 +202,12 @@ const Remix: React.FC = () => {
                 </div>
               </div>
             ))}
+          <VideoModal
+            isOpen={!!selectedVideo}
+            videoId={selectedVideo?.id || ''}
+            onClose={() => setSelectedVideo(null)}
+            title={selectedVideo?.title || ''}
+          />
           </div>
         </section>
 

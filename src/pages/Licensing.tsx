@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
-import { Check, Star, Music, Download, Mail, ArrowRight } from 'lucide-react';
+import { Check, Star, Download, Mail } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Licensing: React.FC = () => {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [customFormData, setCustomFormData] = useState({
-    name: '',
-    email: '',
-    company: '',
-    project: '',
-    usage: '',
-    budget: '',
-    timeline: '',
-    message: '',
-  });
+  const navigate = useNavigate();
+  // const [customFormData, setCustomFormData] = useState({
+  //   name: '',
+  //   email: '',
+  //   company: '',
+  //   project: '',
+  //   usage: '',
+  //   budget: '',
+  //   timeline: '',
+  //   message: '',
+  // });
 
   const pricingPlans = [
     {
@@ -81,19 +83,17 @@ const Licensing: React.FC = () => {
   ];
 
   const handlePurchase = async (plan: any) => {
-    setIsLoading(true);
+    
     setSelectedPlan(plan.id);
+    navigate('/contact');
 
     try {
-      // Replace with actual Stripe integration
-      const stripe = (window as any).Stripe('pk_test_replace_with_live_key');
-      
       // For now, just simulate the process
-      setTimeout(() => {
-        alert(`Redirecting to payment for ${plan.name}...`);
-        setIsLoading(false);
-        setSelectedPlan(null);
-      }, 2000);
+      // setTimeout(() => {
+      //   alert(`Redirecting to payment for ${plan.name}...`);
+      //   setIsLoading(false);
+      //   setSelectedPlan(null);
+      // }, 2000);
       
       // Actual Stripe integration would look like:
       // const response = await fetch('/api/create-checkout-session', {
@@ -110,44 +110,44 @@ const Licensing: React.FC = () => {
     }
   };
 
-  const handleCustomRequest = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+  // const handleCustomRequest = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
 
-    try {
-      // Replace with actual webhook URL
-      const response = await fetch('https://hooks.zapier.com/hooks/catch/0000000/AAAAAAA', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'licensing_request',
-          ...customFormData,
-          timestamp: new Date().toISOString(),
-        }),
-      });
+  //   try {
+  //     // Replace with actual webhook URL
+  //     const response = await fetch('https://hooks.zapier.com/hooks/catch/0000000/AAAAAAA', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({
+  //         type: 'licensing_request',
+  //         ...customFormData,
+  //         timestamp: new Date().toISOString(),
+  //       }),
+  //     });
 
-      if (response.ok) {
-        alert('Your custom licensing request has been submitted! We\'ll get back to you within 24 hours.');
-        setCustomFormData({
-          name: '',
-          email: '',
-          company: '',
-          project: '',
-          usage: '',
-          budget: '',
-          timeline: '',
-          message: '',
-        });
-      } else {
-        throw new Error('Failed to submit request');
-      }
-    } catch (error) {
-      console.error('Form submission error:', error);
-      alert('There was an error submitting your request. Please try again.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //     if (response.ok) {
+  //       alert('Your custom licensing request has been submitted! We\'ll get back to you within 24 hours.');
+  //       setCustomFormData({
+  //         name: '',
+  //         email: '',
+  //         company: '',
+  //         project: '',
+  //         usage: '',
+  //         budget: '',
+  //         timeline: '',
+  //         message: '',
+  //       });
+  //     } else {
+  //       throw new Error('Failed to submit request');
+  //     }
+  //   } catch (error) {
+  //     console.error('Form submission error:', error);
+  //     alert('There was an error submitting your request. Please try again.');
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   return (
     <div className="pt-16 lg:pt-20 min-h-screen bg-gray-900">
@@ -242,7 +242,7 @@ const Licensing: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <Download className="h-5 w-5" />
+                        <Mail className="h-5 w-5" />
                         Purchase License
                       </>
                     )}
@@ -254,7 +254,7 @@ const Licensing: React.FC = () => {
         </div>
 
         {/* Custom Licensing Form */}
-        <div id="custom-form" className="max-w-4xl mx-auto">
+        {/* <div id="custom-form" className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 font-poppins">
               Custom <span className="text-cyan-400">Licensing Request</span>
@@ -418,7 +418,7 @@ const Licensing: React.FC = () => {
               )}
             </button>
           </form>
-        </div>
+        </div> */}
 
         {/* FAQ or Additional Info */}
         <div className="mt-20 text-center">
@@ -429,7 +429,7 @@ const Licensing: React.FC = () => {
             Not sure which license is right for you? We're here to help!
           </p>
           <a
-            href="mailto:licensing@yobaexo.com"
+            href="mailto:info@yobaexo.com"
             className="inline-flex items-center px-6 py-3 bg-pink-600 hover:bg-pink-700 text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105"
           >
             <Mail className="mr-2 h-5 w-5" />

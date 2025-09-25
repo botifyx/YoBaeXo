@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Play, Music, Download, Heart } from 'lucide-react';
+import { Play, Music, Heart, Mail } from 'lucide-react';
 import { youtubeService, YouTubePlaylist, YouTubeVideo } from '../services/youtube';
 
 const Home: React.FC = () => {
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
               to="/licensing"
               className="inline-flex items-center px-8 py-4 bg-transparent border-2 border-cyan-400 text-cyan-400 font-semibold rounded-full hover:bg-cyan-400 hover:text-gray-900 transition-all duration-300 transform hover:scale-105"
             >
-              <Download className="mr-2 h-5 w-5" />
+              <Mail className="mr-2 h-5 w-5" />
               License Music
             </Link>
           </div>

@@ -24,11 +24,11 @@ const Donate: React.FC = () => {
     
     try {
       // Replace with actual Stripe integration
-      const stripe = (window as any).Stripe('pk_test_replace_with_live_key');
+      // const stripe = (window as any).Stripe('pk_test_replace_with_live_key');
       
       // For now, just simulate the process
       setTimeout(() => {
-        alert(`Redirecting to payment for ₹${amount}...`);
+        alert(`Thank you for your support! Payment processing is under development and will be live soon. Your donation intent has been noted.`);
         setIsLoading(false);
       }, 2000);
       
