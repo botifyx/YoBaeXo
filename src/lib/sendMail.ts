@@ -24,6 +24,7 @@ export async function sendEmail(formData: {
       subject: formData.subject,
       category: formData.category,
       message: formData.message,
+      time: new Date().toLocaleString('en-US', { timeZone: 'Asia/Calcutta' }),
     };
 
     const result = await emailjs.send(serviceId, templateId, templateParams);

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, Clock, Send, Music, Calendar } from 'lucide-react';
 import { sendEmail } from '../lib/sendMail';
+import NotificationPopup from '../components/NotificationPopup';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,9 @@ const Contact: React.FC = () => {
     message: '',
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupType, setPopupType] = useState<'success' | 'error'>('success');
+  const [popupMessage, setPopupMessage] = useState('');
 
   const contactInfo = [
     {
@@ -59,7 +63,9 @@ const Contact: React.FC = () => {
       const result = await sendEmail(formData);
 
       if (result.success) {
-        alert('Thank you for your message! We\'ll get back to you within 24-48 hours.');
+        setShowPopup(true);
+        setPopupType('success');
+        setPopupMessage('Thank you for your message! We\'ll get back to you within 24-48 hours.');
         setFormData({
           name: '',
           email: '',
@@ -68,11 +74,15 @@ const Contact: React.FC = () => {
           message: '',
         });
       } else {
-        throw new Error(result.message);
+        setShowPopup(true);
+        setPopupType('error');
+        setPopupMessage(result.message || 'Failed to send email. Please try again.');
       }
     } catch (error) {
       console.error('Form submission error:', error);
-      alert('There was an error sending your message. Please try again or email us directly at info@yobaexo.com. Note: You may need to authenticate with a Microsoft account to send emails.');
+      setShowPopup(true);
+      setPopupType('error');
+      setPopupMessage('There was an error sending your message. Please try again or email us directly at info@yobaexo.com. Note: You may need to authenticate with a Microsoft account to send emails.');
     } finally {
       setIsLoading(false);
     }
@@ -84,7 +94,8 @@ const Contact: React.FC = () => {
   };
 
   return (
-    <div className="pt-16 lg:pt-20 min-h-screen bg-gray-900">
+    <>
+      <div className="pt-16 lg:pt-20 min-h-screen bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Header */}
         <div className="text-center mb-16">
@@ -329,7 +340,14 @@ const Contact: React.FC = () => {
         </div>
       </div>
     </div>
-  );
+    <NotificationPopup
+      isOpen={showPopup}
+      type={popupType}
+      message={popupMessage}
+      onClose={() => setShowPopup(false)}
+    />
+  </>
+);
 };
 
 export default Contact;
